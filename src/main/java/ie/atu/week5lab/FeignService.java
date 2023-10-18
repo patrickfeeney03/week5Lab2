@@ -1,9 +1,8 @@
 package ie.atu.week5lab;
 
-import org.bouncycastle.oer.its.ieee1609dot2.basetypes.SequenceOfUint8;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLOutput;
+import java.util.ArrayList;
 
 @Service
 public class FeignService {
@@ -14,14 +13,9 @@ public class FeignService {
     }
 
     public TodoResponse fetchData() {
-        TodoResponse td = todoClient.fetchData();
-        System.out.println(td);
+        ArrayList<TodoResponse> td_list = todoClient.fetchData();
+        System.out.println(td_list);
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return td;
+        return td_list.stream().filter(elem -> elem.getId() == 196).findFirst().orElse(null);
     }
 }
